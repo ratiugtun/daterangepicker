@@ -13,6 +13,7 @@
       <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.1/moment.min.js"></script>
 
       <script type="text/javascript" src="daterangepicker.js"></script>
+      <script type="text/javscrript" src="buddhist-year.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -40,12 +41,12 @@
 
               <div class="form-group">
                 <label for="startDate">startDate</label>
-                <input type="text" class="form-control" id="startDate" value="07/01/2015">
+                <input type="text" class="form-control" id="startDate" value="01/01/2020">
               </div>
 
               <div class="form-group">
                 <label for="endDate">endDate</label>
-                <input type="text" class="form-control" id="endDate" value="07/15/2015">
+                <input type="text" class="form-control" id="endDate" value="15/01/2020">
               </div>
 
               <div class="form-group">
@@ -128,7 +129,7 @@
 
               <div class="checkbox">
                 <label>
-                  <input type="checkbox" id="locale"> locale (with example settings)
+                  <input type="checkbox" id="locale" checked="checked"> locale (with example settings)
                 </label>
                 <label id="rtl-wrap">
                   <input type="checkbox" id="rtl"> RTL (right-to-left)
@@ -159,6 +160,12 @@
               <div class="checkbox">
                 <label>
                   <input type="checkbox" id="showCustomRangeLabel" checked="checked"> showCustomRangeLabel
+                </label>
+              </div>
+
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" id="isBuddhistYear-c" checked="checked"> isBuddhistYear
                 </label>
               </div>
 
@@ -206,7 +213,7 @@
           <div class="col-md-4 col-md-offset-2 demo">
             <h4>Your Date Range Picker</h4>
             <center>
-              <input type="text" id="config-demo" class="form-control">
+              <input type="text" id="config-demo" class="form-control" style="width: 150px;text-align: center;">
             </center>
           </div>
 
@@ -244,7 +251,7 @@
           $(this).parent().find('input').click();
         });
 
-        $('#startDate').daterangepicker({
+        /*$('#startDate').daterangepicker({
           singleDatePicker: true,
           startDate: moment().subtract(6, 'days')
         });
@@ -252,7 +259,7 @@
         $('#endDate').daterangepicker({
           singleDatePicker: true,
           startDate: moment()
-        });
+        });*/
 
         updateConfig();
 
@@ -289,6 +296,9 @@
           if ($('#dateLimit').is(':checked'))
             options.dateLimit = { days: 7 };
 
+          if ($('#isBuddhistYear-c').is(':checked'))
+            options.isBuddhistYear = true;
+
           if ($('#ranges').is(':checked')) {
             options.ranges = {
               'Today': [moment(), moment()],
@@ -304,15 +314,15 @@
             $('#rtl-wrap').show();
             options.locale = {
               direction: $('#rtl').is(':checked') ? 'rtl' : 'ltr',
-              format: 'MM/DD/YYYY HH:mm',
+              format: 'DD/MM/YYYY',// 'DD/MM/YYYY HH:mm'
               separator: ' - ',
-              applyLabel: 'Apply',
-              cancelLabel: 'Cancel',
-              fromLabel: 'From',
-              toLabel: 'To',
-              customRangeLabel: 'Custom',
-              daysOfWeek: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr','Sa'],
-              monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+              applyLabel: 'ตกลง',
+              cancelLabel: 'ยกเลิก',
+              fromLabel: 'ตั้งแต่',
+              toLabel: 'ถึง',
+              customRangeLabel: 'เลือกช่วงเอง',
+              daysOfWeek: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ','ส'],
+              monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
               firstDay: 1
             };
           } else {

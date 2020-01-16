@@ -55,6 +55,7 @@
         this.autoUpdateInput = true;
         this.alwaysShowCalendars = false;
         this.ranges = {};
+        this.isBuddhistYear = false;
 
         this.opens = 'right';
         if (this.element.hasClass('pull-right'))
@@ -278,6 +279,9 @@
         if (typeof options.alwaysShowCalendars === 'boolean')
             this.alwaysShowCalendars = options.alwaysShowCalendars;
 
+        if (typeof options.isBuddhistYear === 'boolean')
+            this.isBuddhistYear = options.isBuddhistYear;
+
         // update day names order to firstDay
         if (this.locale.firstDay != 0) {
             var iterator = this.locale.firstDay;
@@ -455,7 +459,7 @@
                 this.startDate = moment(startDate, this.locale.format);
 
             if (typeof startDate === 'object')
-                this.startDate = moment(startDate);
+                this.startDate = moment(startDate, this.locale.format);
 
             if (!this.timePicker)
                 this.startDate = this.startDate.startOf('day');
@@ -704,7 +708,8 @@
                 html += '<th></th>';
             }
 
-            var dateHtml = this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
+            var dateHtml = this.isBuddhistYear? this.locale.monthNames[calendar[1][1].month()] + " " + (Number(calendar[1][1].format(" YYYY")) + 543) : this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
+            //var dateHtml = this.locale.monthNames[calendar[1][1].month()] + calendar[1][1].format(" YYYY");
 
             if (this.showDropdowns) {
                 var currentMonth = calendar[1][1].month();
@@ -1531,14 +1536,31 @@
 
         updateElement: function() {
             if (this.element.is('input') && this.autoUpdateInput) {
-                var newValue = this.startDate.format(this.locale.format);
+                var newValue = this.isBuddhistYear? this.toBuddhistYear(moment(this.startDate.format(this.locale.format), this.locale.format),this.locale.format) : this.startDate.format(this.locale.format);
                 if (!this.singleDatePicker) {
-                    newValue += this.locale.separator + this.endDate.format(this.locale.format);
+                    newValue += this.locale.separator;
+                    newValue += this.isBuddhistYear? this.toBuddhistYear(moment(this.endDate.format(this.locale.format),this.locale.format),this.locale.format) : this.endDate.format(this.locale.format);
                 }
                 if (newValue !== this.element.val()) {
                     this.element.val(newValue).trigger('change');
                 }
             }
+        },
+
+        toBuddhistYear: (moment, format) => {
+            var christianYear = moment.format('YYYY');
+            var buddhishYear = (parseInt(christianYear) + 543).toString();
+            return moment
+              .format(format.replace('YYYY', buddhishYear).replace('YY', buddhishYear.substring(2, 4)))
+              .replace(christianYear, buddhishYear);
+        },
+
+        toChristianYear: (moment, format) => {
+            var buddhishYear = moment.format('YYYY');
+            var christianYear = (parseInt(buddhishYear) - 543).toString();
+            return moment
+              .format(format.replace('YYYY', christianYear).replace('YY', christianYear.substring(2, 4)))
+              .replace(buddhishYear, christianYear);
         },
 
         remove: function() {
