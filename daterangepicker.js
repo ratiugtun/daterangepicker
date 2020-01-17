@@ -509,7 +509,7 @@
 
             this.previousRightTime = this.endDate.clone();
 
-            this.container.find('.drp-selected').html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+            this.container.find('.drp-selected').html(this.toBuddhistYear(moment(this.startDate, this.locale.format), this.locale.format) + this.locale.separator + this.toBuddhistYear(moment(this.endDate, this.locale.format),this.locale.format));
 
             if (!this.isShowing)
                 this.updateElement();
@@ -536,7 +536,7 @@
                 }
             }
             if (this.endDate)
-                this.container.find('.drp-selected').html(this.startDate.format(this.locale.format) + this.locale.separator + this.endDate.format(this.locale.format));
+                this.container.find('.drp-selected').html(this.toBuddhistYear(moment(this.startDate,this.locale.format),this.locale.format) + this.locale.separator + this.toBuddhistYear(moment(this.endDate,this.locale.format),this.locale.format));
             this.updateMonthsInView();
             this.updateCalendars();
             this.updateFormInputs();
