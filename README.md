@@ -1,5 +1,15 @@
 # Date Range Picker
 
+Fork from [dangrossman/daterangepicker](https://github.com/dangrossman/daterangepicker)
+
+by the idea of [akexorcist/buddhist-year.js](https://gist.github.com/akexorcist/eb5e8266670721c191a62851e3d8bb3d)
+
+Adding the option to display year in Buddhist carlendar by setting isBuddhistYear: true (default: false)
+
+```javascript
+isBuddhistYear: true
+```
+
 ![Improvely.com](https://i.imgur.com/UTRlaar.png)
 
 This date range picker component creates a dropdown menu from which a user can
