@@ -1503,12 +1503,12 @@
                 end = null;
 
             if (dateString.length === 2) {
-                start = moment(dateString[0], this.locale.format);
-                end = moment(dateString[1], this.locale.format);
+                start = this.toChristianYear(moment(dateString[0], this.locale.format), this.locale.format);
+                end = this.toChristianYear(moment(dateString[1], this.locale.format), this.locale.format);
             }
 
             if (this.singleDatePicker || start === null || end === null) {
-                start = moment(this.element.val(), this.locale.format);
+                start = this.toChristianYear(moment(this.element.val(), this.locale.format),this.locale.format);
                 end = start;
             }
 
@@ -1549,18 +1549,14 @@
 
         toBuddhistYear: (moment, format) => {
             var christianYear = moment.format('YYYY');
-            var buddhishYear = (parseInt(christianYear) + 543).toString();
+            var buddhistYear = (parseInt(christianYear) + 543).toString();
             return moment
-              .format(format.replace('YYYY', buddhishYear).replace('YY', buddhishYear.substring(2, 4)))
-              .replace(christianYear, buddhishYear);
+              .format(format.replace('YYYY', buddhistYear).replace('YY', buddhistYear.substring(2, 4)))
+              .replace(christianYear, buddhistYear);
         },
 
         toChristianYear: (moment, format) => {
-            var buddhishYear = moment.format('YYYY');
-            var christianYear = (parseInt(buddhishYear) - 543).toString();
-            return moment
-              .format(format.replace('YYYY', christianYear).replace('YY', christianYear.substring(2, 4)))
-              .replace(buddhishYear, christianYear);
+            return moment.subtract(543,'years');
         },
 
         remove: function() {
