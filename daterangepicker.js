@@ -737,7 +737,7 @@
                 for (var y = minYear; y <= maxYear; y++) {
                     yearHtml += '<option value="' + y + '"' +
                         (y === currentYear ? ' selected="selected"' : '') +
-                        '>' + y + '</option>';
+                        '>' + (this.isBuddhistYear? (Number(y) + 543): y) + '</option>';
                 }
                 yearHtml += '</select>';
 
