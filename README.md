@@ -10,6 +10,34 @@ Adding the option to display year in Buddhist calendar by setting isBuddhistYear
 isBuddhistYear: true
 ```
 
+## Example
+The below example will display an empty single date picker 
+```javascript
+var DRP_singleOptions = {
+    singleDatePicker: true,
+    isBuddhistYear: true,
+    autoUpdateInput: false,
+    showDropdowns: true,
+    locale: {
+      format: 'DD/MM/YYYY',
+      separator: ' / ',
+      applyLabel: 'ตกลง',
+      cancelLabel: 'ยกเลิก',
+      fromLabel: 'ตั้งแต่',
+      toLabel: 'ถึง',
+      daysOfWeek: ['อา', 'จ', 'อ', 'พ', 'พฤ', 'ศ','ส'],
+      monthNames: ['มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน', 'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม'],
+      firstDay: 0
+    }
+  };
+
+$('#your_picker').daterangepicker(DRP_singleOptions).on("apply.daterangepicker", function (e, picker) {
+		var val = DRP_singleOptions.isBuddhistYear? picker.toBuddhistYear(picker.startDate, picker.locale.format) : picker.startDate.format(picker.locale.format);
+		picker.element.val(val);
+    });
+```
+
+
 ![Improvely.com](https://i.imgur.com/UTRlaar.png)
 
 This date range picker component creates a dropdown menu from which a user can
